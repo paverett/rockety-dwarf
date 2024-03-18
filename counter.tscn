@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccbqw127sx3ed"]
+
+[ext_resource type="Script" path="res://counter.gd" id="1_vbkle"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27xmu"]
+size = Vector2(50, 720)
+
+[node name="counter" type="StaticBody2D" groups=["counters"]]
+position = Vector2(480, 0)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_vbkle")
+metadata/_edit_group_ = true
+
+[node name="Counter" type="CollisionShape2D" parent="."]
+position = Vector2(25, 360)
+shape = SubResource("RectangleShape2D_27xmu")
+debug_color = Color(0, 0.6, 0.701961, 0.478431)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(0, 0, 50, 720)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

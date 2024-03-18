@@ -1,0 +1,145 @@
+[gd_scene load_steps=17 format=3 uid="uid://dwblliu5lgnpo"]
+
+[ext_resource type="PackedScene" uid="uid://bkqu7c04kwtsk" path="res://player.tscn" id="1_jwdcu"]
+[ext_resource type="Script" path="res://main.gd" id="1_u31g8"]
+[ext_resource type="PackedScene" uid="uid://baygpyean14dm" path="res://cave_spears.tscn" id="2_6kmh2"]
+[ext_resource type="PackedScene" uid="uid://clp6kdlepl5lp" path="res://enemy.tscn" id="4_lvml0"]
+[ext_resource type="PackedScene" uid="uid://5oeuqaqr7qho" path="res://hud.tscn" id="5_2kixn"]
+[ext_resource type="PackedScene" uid="uid://ccbqw127sx3ed" path="res://counter.tscn" id="5_cu3cx"]
+[ext_resource type="Texture2D" uid="uid://dae5yx1bq6ybi" path="res://assets/background/1.png" id="5_nb81y"]
+[ext_resource type="Texture2D" uid="uid://cg6d34pwervm7" path="res://assets/background/2.png" id="6_xnv4a"]
+[ext_resource type="Texture2D" uid="uid://chr4dnhshqcve" path="res://assets/background/3.png" id="7_ssc5d"]
+[ext_resource type="Texture2D" uid="uid://m125ult56we" path="res://assets/background/4.png" id="8_0xdlq"]
+[ext_resource type="Texture2D" uid="uid://b0lgmvoct66ns" path="res://assets/background/5.png" id="9_kfvgy"]
+[ext_resource type="Texture2D" uid="uid://b2d8gipretaa4" path="res://assets/background/6.png" id="10_ju4rs"]
+[ext_resource type="Texture2D" uid="uid://brww75jloasd0" path="res://assets/background/7.png" id="11_2cyuo"]
+
+[sub_resource type="GDScript" id="GDScript_ohfgg"]
+script/source = "extends Timer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xvsw6"]
+normal = Vector2(0, 5)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k004y"]
+normal = Vector2(0, -5)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_u31g8")
+cave_spears_scene = ExtResource("2_6kmh2")
+counter_scene = ExtResource("5_cu3cx")
+enemy_scene = ExtResource("4_lvml0")
+
+[node name="CaveBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer7" type="ParallaxLayer" parent="CaveBackground"]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer7"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("11_2cyuo")
+centered = false
+
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="CaveBackground"]
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer6"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("10_ju4rs")
+centered = false
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="CaveBackground"]
+motion_scale = Vector2(1.2, 1.2)
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer5"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("9_kfvgy")
+centered = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="CaveBackground"]
+motion_scale = Vector2(1.4, 1.4)
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer4"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("8_0xdlq")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="CaveBackground"]
+motion_scale = Vector2(1.6, 1.6)
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer3"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("7_ssc5d")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="CaveBackground"]
+motion_scale = Vector2(1.8, 1.8)
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer2"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("6_xnv4a")
+centered = false
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="CaveBackground"]
+motion_scale = Vector2(2, 2)
+motion_mirroring = Vector2(768, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CaveBackground/ParallaxLayer1"]
+scale = Vector2(2, 3.35)
+texture = ExtResource("5_nb81y")
+centered = false
+
+[node name="CanvasModulate2" type="CanvasModulate" parent="CaveBackground"]
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_jwdcu")]
+
+[node name="CaveSpearTimer" type="Timer" parent="."]
+wait_time = 3.0
+script = SubResource("GDScript_ohfgg")
+
+[node name="BatSpawn" type="Marker2D" parent="."]
+position = Vector2(100, 360)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
+[node name="hud" parent="." instance=ExtResource("5_2kixn")]
+layer = 2
+
+[node name="Roof" type="StaticBody2D" parent="."]
+position = Vector2(-2, -2)
+collision_mask = 0
+
+[node name="RoofShape" type="CollisionShape2D" parent="Roof"]
+shape = SubResource("WorldBoundaryShape2D_xvsw6")
+debug_color = Color(0.941176, 0.121569, 0.517647, 0.780392)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(-2, 722)
+collision_mask = 0
+
+[node name="FloorShape" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape2D_k004y")
+debug_color = Color(0.905882, 0.2, 0.584314, 0.8)
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="light" from="Player" to="." method="_on_player_light"]
+[connection signal="score" from="Player" to="." method="_on_player_score"]
+[connection signal="timeout" from="CaveSpearTimer" to="." method="_on_cave_spear_timer_timeout"]
+[connection signal="start_game" from="hud" to="." method="new_game"]

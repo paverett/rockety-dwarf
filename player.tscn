@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=3 uid="uid://bkqu7c04kwtsk"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_g4khl"]
+[ext_resource type="Texture2D" uid="uid://f0s6qgn3yec2" path="res://assets/minecart.png" id="2_yvof5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y70p"]
+atlas = ExtResource("2_yvof5")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ie73h"]
+atlas = ExtResource("2_yvof5")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnxex"]
+atlas = ExtResource("2_yvof5")
+region = Rect2(96, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1jyu8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y70p")
+}],
+"loop": true,
+"name": &"float",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ie73h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnxex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ie73h")
+}],
+"loop": false,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nugrr"]
+size = Vector2(24, 36)
+
+[sub_resource type="Gradient" id="Gradient_i3504"]
+offsets = PackedFloat32Array(0, 0.758865)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_juwba"]
+gradient = SubResource("Gradient_i3504")
+width = 100
+height = 100
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Player" type="Area2D" groups=["player"]]
+position = Vector2(100, 360)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_g4khl")
+metadata/_edit_group_ = true
+
+[node name="Cart" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_1jyu8")
+animation = &"float"
+autoplay = "float"
+
+[node name="Body" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_nugrr")
+
+[node name="Lamp" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -150
+range_layer_max = 150
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+shadow_filter = 1
+texture = SubResource("GradientTexture2D_juwba")
+
+[node name="LampTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="Cart" to="." method="_on_cart_animation_finished"]
